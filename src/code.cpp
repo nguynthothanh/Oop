@@ -98,11 +98,16 @@ public:
         }
         else if (ngua.trangThai == TREN_BAN_CO) {
             banCo[ngua.viTri] = nullptr;
-if (ngua.quangDuongDaDi + diemXucXac >= 48) {
+            if (ngua.quangDuongDaDi + diemXucXac > 48) {
+                banCo[ngua.viTri] = &ngua; 
+                cout << "  -> So buoc qua lon, khong the vao doc!\n";
+            }
+            else if (ngua.quangDuongDaDi + diemXucXac == 48) {
                 ngua.trangThai = LEN_DOC;
-                ngua.viTri = (ngua.quangDuongDaDi + diemXucXac) - 48 + 1;
-                cout << "  -> Ngua " << indexNgua << " bat dau len doc tai bac " << ngua.viTri << "\n";
-            } else {
+                ngua.viTri = 0;
+                cout << "  -> Ngua " << indexNgua << " da den chan doc. Can tung 1 de len bac 1.\n";
+            }
+            else {
                 int viTriMoi = (ngua.viTri + diemXucXac) % 48;
                 xuLyDaNgua(ngua, viTriMoi, p);
                 ngua.viTri = viTriMoi;
@@ -110,10 +115,13 @@ if (ngua.quangDuongDaDi + diemXucXac >= 48) {
                 banCo[viTriMoi] = &ngua;
                 cout << "  -> Ngua " << indexNgua << " di den o " << viTriMoi << "\n";
             }
+        
         }
         else if (ngua.trangThai == LEN_DOC) {
-            ngua.viTri = diemXucXac;
-            cout << "  -> Ngua " << indexNgua << " len bac " << ngua.viTri << "\n";
+            if (diemXucXac == ngua.viTri + 1) {
+                ngua.viTri = diemXucXac;
+                cout << "  -> Ngua " << indexNgua << " len bac " << ngua.viTri << "\n";
+            }
             if (ngua.viTri == 6) {
                 ngua.trangThai = VE_DICH;
                 p.soQuanVeDich++;
