@@ -212,93 +212,51 @@ public:
 
 class ChienThuatCanBang : public ChienThuat {
 public:
-
     string ten() override {
         return "Can Bang";
     }
-
-    int chonNgua(NguoiChoi& p,
-                 DieuKhienTroChoi& game,
-                 int dice,
-                 int* ds,
-                 int size) override {
-
+    int chonNgua(NguoiChoi& p, DieuKhienTroChoi& game, int dice, int* ds, int size) override {
         if (dice == 6) {
-
             for (int i = 0; i < size; i++) {
-
                 QuanCo& n = *p.danhSachNgua[ds[i]];
-
                 if (n.trangThai == TRONG_CHUONG) {
                     return ds[i];
                 }
             }
-
             for (int i = 0; i < size; i++) {
-
                 QuanCo& n = *p.danhSachNgua[ds[i]];
-
                 if (n.trangThai == TREN_BAN_CO) {
-
-                    int vtMoi =
-                        (n.viTri + dice) % 48;
-
-                    QuanCo* q =
-                        game.layQuanTai(vtMoi);
-
-                    if (q != nullptr &&
-                        q->mau != n.mau) {
-
+                    int vtMoi = (n.viTri + dice) % 48;
+                    QuanCo* q = game.layQuanTai(vtMoi);
+                    if (q != nullptr && q->mau != n.mau) {
                         return ds[i];
                     }
                 }
             }
             int best = ds[0];
-
             for (int i = 1; i < size; i++) {
-
-                if (p.danhSachNgua[ds[i]]
-                    ->quangDuongDaDi >
-
-                    p.danhSachNgua[best]
-                    ->quangDuongDaDi) {
-
+                if (p.danhSachNgua[ds[i]]->quangDuongDaDi > p.danhSachNgua[best]->quangDuongDaDi) {
                     best = ds[i];
                 }
             }
             return best;
         }
         for (int i = 0; i < size; i++) {
-
             QuanCo& n = *p.danhSachNgua[ds[i]];
-
             if (n.trangThai == TREN_BAN_CO) {
-
-                int vtMoi =
-                    (n.viTri + dice) % 48;
-
-                QuanCo* q =
-                    game.layQuanTai(vtMoi);
-
-                if (q != nullptr &&
-                    q->mau != n.mau) {
-
+                int vtMoi = (n.viTri + dice) % 48;
+                QuanCo* q = game.layQuanTai(vtMoi);
+                if (q != nullptr && q->mau != n.mau) {
                     return ds[i];
                 }
             }
         }
         int best = ds[0];
         for (int i = 1; i < size; i++) {
-            if (p.danhSachNgua[ds[i]]
-                ->quangDuongDaDi >
-
-                p.danhSachNgua[best]
-                ->quangDuongDaDi) {
-
+            if (p.danhSachNgua[ds[i]]->quangDuongDaDi > p.danhSachNgua[best]->quangDuongDaDi) {
                 best = ds[i];
             }
         }
-
         return best;
     }
 };
